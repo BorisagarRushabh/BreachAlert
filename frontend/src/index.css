@@ -1,0 +1,331 @@
+/* Import Bootstrap */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* Custom Cyber Security Theme */
+:root {
+  --cyber-blue: #06b6d4;
+  --cyber-green: #10b981;
+  --cyber-purple: #8b5cf6;
+  --cyber-red: #ef4444;
+  --cyber-orange: #f97316;
+  --cyber-cyan: #22d3ee;
+  --dark-100: #1e293b;
+  --dark-200: #1a2332;
+  --dark-300: #151f2a;
+  --dark-400: #0f172a;
+  --dark-500: #0a0f1a;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--dark-400);
+  color: #f8fafc;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Cyber Theme Classes */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cyber-glow {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+}
+
+.cyber-glow-red {
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.cyber-glow-green {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--cyber-cyan) 0%, var(--cyber-green) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Background Utilities */
+.bg-cyber-gradient {
+  background: linear-gradient(135deg, var(--cyber-blue), var(--cyber-green));
+}
+
+.bg-cyber-gradient-red {
+  background: linear-gradient(135deg, var(--cyber-red), var(--cyber-orange));
+}
+
+.bg-cyber-gradient-purple {
+  background: linear-gradient(135deg, var(--cyber-purple), #ec4899);
+}
+
+/* Bootstrap Overrides */
+.btn-cyber {
+  background: var(--cyber-blue);
+  border: none;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cyber::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-cyber:hover::before {
+  left: 100%;
+}
+
+.btn-cyber:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(6, 182, 212, 0.4);
+  color: white;
+  background: var(--cyber-cyan);
+}
+
+.btn-cyber-danger {
+  background: var(--cyber-red);
+  border: none;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-cyber-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+  color: white;
+  background: #dc2626;
+}
+
+.bg-dark-custom {
+  background-color: var(--dark-400);
+}
+
+.bg-darker {
+  background-color: var(--dark-300);
+}
+
+.text-cyber-blue {
+  color: var(--cyber-blue);
+}
+
+.text-cyber-green {
+  color: var(--cyber-green);
+}
+
+.text-cyber-cyan {
+  color: var(--cyber-cyan);
+}
+
+.border-cyber {
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.border-cyber-green {
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Form Styles */
+.form-cyber {
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid #334155;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.form-cyber:focus {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: var(--cyber-blue);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+  color: white;
+}
+
+.form-cyber::placeholder {
+  color: #94a3b8;
+}
+
+/* Card Styles */
+.card-cyber {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.card-cyber:hover {
+  transform: translateY(-5px);
+  border-color: var(--cyber-blue);
+  box-shadow: 0 10px 25px rgba(6, 182, 212, 0.2);
+}
+
+/* Navigation */
+.navbar-cyber {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Cyber Grid Background */
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Animated Background */
+.animated-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(6, 182, 212, 0.1) 50%,
+    transparent 100%
+  );
+  animation: shimmer 3s infinite linear;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+/* Pulse Animation */
+.pulse-cyber {
+  animation: pulse-cyber 2s infinite;
+}
+
+@keyframes pulse-cyber {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(6, 182, 212, 0);
+  }
+}
+
+/* Floating Animation */
+.float-cyber {
+  animation: float-cyber 3s ease-in-out infinite;
+}
+
+@keyframes float-cyber {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Text Glow */
+.text-glow {
+  text-shadow: 0 0 10px currentColor;
+}
+
+/* Status Indicators */
+.status-online {
+  background: var(--cyber-green);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.status-warning {
+  background: var(--cyber-orange);
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+}
+
+.status-critical {
+  background: var(--cyber-red);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+  animation: pulse-cyber 1.5s infinite;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-300);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cyber-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyber-cyan);
+}
+
+/* Responsive Improvements */
+@media (max-width: 768px) {
+  .glass {
+    backdrop-filter: blur(5px);
+  }
+  
+  .navbar-cyber {
+    backdrop-filter: blur(5px);
+  }
+}
+
+/* Loading Animation */
+.loading-cyber {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,.3);
+  border-radius: 50%;
+  border-top-color: var(--cyber-blue);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Badge Styles */
+.badge-cyber {
+  background: rgba(6, 182, 212, 0.2);
+  border: 1px solid var(--cyber-blue);
+  color: var(--cyber-cyan);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+}
+
+.badge-cyber-critical {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid var(--cyber-red);
+  color: var(--cyber-red);
+}
