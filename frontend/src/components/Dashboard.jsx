@@ -3,6 +3,8 @@ import { Container, Row, Col, Card, Button, Form, Table, Badge, Navbar, Nav, Mod
 import { Shield, User, Mail, Bell, LogOut, Plus, AlertTriangle, CheckCircle, Eye, RefreshCw, Trash2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+// Add this at the top with other imports
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://breachalert-backend.onrender.com/api';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
@@ -32,83 +34,78 @@ useEffect(() => {
   }
 }, [user, loading]);
 
-  const loadEmails = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/emails');
-      if (response.ok) {
-        const data = await response.json();
-        setEmails(data);
-      }
-    } catch (error) {
-      console.error('Failed to load emails:', error);
+const loadEmails = async () => {
+  try {
+    const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://breachalert-backend.onrender.com/api';
+    const response = await fetch(`${API_BASE}/emails`);
+    if (response.ok) {
+      const data = await response.json();
+      setEmails(data);
     }
-  };
+  } catch (error) {
+    console.error('Failed to load emails:', error);
+  }
+};
 
-  const addEmail = async (e) => {
-    e.preventDefault();
-    if (!newEmail) return;
-    
-    setLoading(true);
-    try {
-      const response = await fetch('http://localhost:5000/api/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: newEmail })
-      });
+const addEmail = async (e) => {
+  e.preventDefault();
+  if (!newEmail) return;
+  
+  setLoading(true);
+  try {
+    const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://breachalert-backend.onrender.com/api';
+    const response = await fetch(`${API_BASE}/emails`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: newEmail })
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        setEmails(prev => [...prev, data]);
-        setNewEmail('');
-        
-        // Auto-scan the new email
-        setTimeout(() => {
-          scanEmail(data.email);
-        }, 500);
-      } else {
-        alert('Failed to add email');
-      }
-    } catch (error) {
-      alert('Network error. Please try again.');
-    } finally {
-      setLoading(false);
+    if (response.ok) {
+      const data = await response.json();
+      setEmails(prev => [...prev, data]);
+      setNewEmail('');
+    } else {
+      alert('Failed to add email');
     }
-  };
+  } catch (error) {
+    alert('Network error. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
 
-  const scanEmail = async (email) => {
-    setScanningEmail(email);
-    try {
-      const response = await fetch('http://localhost:5000/api/scans/scan', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email })
-      });
+const scanEmail = async (email) => {
+  setScanningEmail(email);
+  try {
+    const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://breachalert-backend.onrender.com/api';
+    const response = await fetch(`${API_BASE}/scans/scan`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email })
+    });
 
-      if (response.ok) {
-        const result = await response.json();
-        setScanResult(result.data);
-        setShowScanModal(true);
-        
-        // Refresh emails to update the table
-        loadEmails();
-      } else {
-        alert('Scan failed. Please try again.');
-      }
-    } catch (error) {
-      alert('Network error during scan.');
-    } finally {
-      setScanningEmail(null);
+    if (response.ok) {
+      const result = await response.json();
+      setScanResult(result.data);
+      setShowScanModal(true);
+      loadEmails();
+    } else {
+      alert('Scan failed. Please try again.');
     }
-  };
-
+  } catch (error) {
+    alert('Network error during scan.');
+  } finally {
+    setScanningEmail(null);
+  }
+};
   const removeEmail = async (email) => {
     if (window.confirm(`Are you sure you want to stop monitoring ${email}?`)) {
       try {
-        const response = await fetch(`http://localhost:5000/api/emails/${encodeURIComponent(email)}`, {
+        const response = await fetch(`https://breachalert-backend.onrender.com/api/emails/${encodeURIComponent(email)}`, {
           method: 'DELETE'
         });
 

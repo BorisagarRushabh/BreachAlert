@@ -14,6 +14,33 @@ const monitoredEmails = [];
 app.use(cors());
 app.use(express.json());
 
+// ✅ ADDED: Root API endpoint
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'BreachAlert API Server',
+    version: '1.0.0',
+    endpoints: {
+      auth: {
+        login: 'POST /api/auth/login',
+        register: 'POST /api/auth/register'
+      },
+      emails: {
+        list: 'GET /api/emails',
+        add: 'POST /api/emails',
+        delete: 'DELETE /api/emails/:email'
+      },
+      scans: {
+        scan: 'POST /api/scans/scan',
+        test: 'GET /api/scans/test-breach/:email',
+        free: 'POST /api/scans/free-scan'
+      },
+      health: 'GET /api/health'
+    },
+    status: 'operational',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ 
@@ -303,7 +330,8 @@ app.post('/api/scans/free-scan', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`🔗 Health: http://localhost:${PORT}/api/health`);
+  console.log(`🔗 API Root: http://localhost:${PORT}/api`);
+  console.log(`❤️ Health: http://localhost:${PORT}/api/health`);
   console.log(`📧 Emails: http://localhost:${PORT}/api/emails`);
   console.log(`🔍 Scan: POST http://localhost:${PORT}/api/scans/scan`);
   console.log(`🗑️ Delete: DELETE http://localhost:${PORT}/api/emails/:email`);

@@ -14,7 +14,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const API_BASE = 'http://localhost:5000/api';
+  // FIX: Use environment variable with fallback to LIVE backend
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://breachalert-backend.onrender.com/api';
 
   useEffect(() => {
     checkAuthStatus();
@@ -22,7 +23,6 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      // Check localStorage for user data - SYNC operation
       const savedUser = localStorage.getItem('user');
       if (savedUser) {
         const userData = JSON.parse(savedUser);
@@ -39,6 +39,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
+      console.log('🔐 Attempting login to:', `${API_BASE}/auth/login`);
+      
       const response = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: {
@@ -61,15 +63,18 @@ export const AuthProvider = ({ children }) => {
         };
       }
     } catch (error) {
+      console.error('❌ Login network error:', error);
       return { 
         success: false, 
-        error: 'Network error. Please try again.' 
+        error: 'Network error. Please check your connection.' 
       };
     }
   };
 
   const register = async (userData) => {
     try {
+      console.log('📝 Attempting registration to:', `${API_BASE}/auth/register`);
+      
       const response = await fetch(`${API_BASE}/auth/register`, {
         method: 'POST',
         headers: {
@@ -92,9 +97,10 @@ export const AuthProvider = ({ children }) => {
         };
       }
     } catch (error) {
+      console.error('❌ Registration network error:', error);
       return { 
         success: false, 
-        error: 'Network error. Please try again.' 
+        error: 'Network error. Please check your connection.' 
       };
     }
   };
